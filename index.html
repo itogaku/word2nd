@@ -340,7 +340,7 @@ button,
 <div id="quizControls">
   <button onclick="goToQuiz()">問題</button>
   <button onclick="showPage('list')">一覧</button>
-  <button onclick="toggleWrongOnlyMode()">不正解のみ</button>
+  <button onclick="enableWrongOnlyMode()">不正解のみ</button>
   <button onclick="resetProgress()">リセット</button>
 </div>
 
@@ -2563,13 +2563,14 @@ function loadData() {
   renderQuestion();
 }
   
-function toggleWrongOnlyMode() {
-  wrongOnlyMode = !wrongOnlyMode;
+function enableWrongOnlyMode() {
+  wrongOnlyMode = true;
   unattemptedOnlyMode = false;
 
-  updateProgressMini();   // ← これ
+  updateProgressMini();
   renderQuestion();
 }
+
 
 
 function resetProgress() {
@@ -2685,15 +2686,15 @@ function showPage(id) {
 }
 
 function goToQuiz() {
-  if (wrongOnlyMode) {
-    wrongOnlyMode = false;
-    unattemptedOnlyMode = true;
-  }
+  // ← ここで必ず通常モードに戻す
+  wrongOnlyMode = false;
+  unattemptedOnlyMode = false;
 
-  updateProgressMini();   // ← これ
+  updateProgressMini();
   showPage("quiz");
   renderQuestion();
 }
+
 
 
   
@@ -2771,6 +2772,7 @@ buildKeyboard();
 
 </body>
 </html>
+
 
 
 
